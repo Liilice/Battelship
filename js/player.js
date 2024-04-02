@@ -98,10 +98,9 @@
         });
       });
     },
-    renderShips: function (grid) {
-      //   console.log(this.players[0]);
-    },
-  };
+
+    renderShips: function (grid) {},
+  };  
 
   global.player = player;
 })(this);
