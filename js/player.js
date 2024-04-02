@@ -4,7 +4,7 @@
 (function (global) {
   "use strict";
 
-  var sheep = { dom: { parentNode: { removeChild: function () {} } } };
+  var ship = { dom: { parentNode: { removeChild: function () {} } } };
 
   var player = {
     grid: [],
@@ -15,6 +15,7 @@
     setGame: function (game) {
       this.game = game;
     },
+    isShipOk: function () {},
     init: function () {
       // créé la flotte
       this.fleet.push(shipFactory.build(shipFactory.TYPE_BATTLESHIP));
@@ -60,8 +61,8 @@
     },
     clearPreview: function () {
       this.fleet.forEach(function (ship) {
-        if (sheep.dom.parentNode) {
-          sheep.dom.parentNode.removeChild(ship.dom);
+        if (ship.dom.parentNode) {
+          ship.dom.parentNode.removeChild(ship.dom);
         }
       });
     },
@@ -99,7 +100,7 @@
       });
     },
     renderShips: function (grid) {},
-  };
+  };  
 
   global.player = player;
 })(this);
