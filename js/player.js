@@ -15,7 +15,7 @@
     setGame: function (game) {
       this.game = game;
     },
-    isShipOk: function () {},
+    // isShipOk: function () {},
     init: function () {
       // créé la flotte
       this.fleet.push(shipFactory.build(shipFactory.TYPE_BATTLESHIP));
@@ -56,7 +56,6 @@
         this.grid[y][x + i] = ship.getId();
         i += 1;
       }
-
       return true;
     },
     clearPreview: function () {
@@ -99,6 +98,7 @@
         });
       });
     },
+
     renderShips: function (grid) {},
   };  
 
