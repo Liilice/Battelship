@@ -18,13 +18,20 @@
       }, 2000);
     },
     isShipOk: function (callback) {
-      var i = 0;
-      var j;
+      var self = this;
 
+      // var i = 0;
+      // var j;
       this.fleet.forEach(function (ship, i) {
-        j = 0;
+        var i = Math.floor(Math.random() * 10);
+        var x = Math.floor(Math.random() * (10 - ship.life + 1));
+        var j = 0;
         while (j < ship.life) {
-          this.grid[i][j] = ship.getId();
+          if (self.grid[i][x + j] !== 0) {
+            return;
+          } else {
+            self.grid[i][x + j] = ship.getId();
+          }
           j += 1;
         }
       }, this);

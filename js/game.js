@@ -243,7 +243,7 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[0].grid);
-      // console.log(this.players[0]);
+      console.log(this.players[1].grid);
       let miniGrid = this.miniGrid;
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
