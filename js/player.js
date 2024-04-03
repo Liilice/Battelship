@@ -51,13 +51,18 @@
     setActiveShipPosition: function (x, y) {
       var ship = this.fleet[this.activeShip];
       var i = 0;
-
       while (i < ship.getLife()) {
-        this.grid[y][x + i] = ship.getId();
+        console.log(ship);
+        if (ship.id === 4) {
+          this.grid[y][x + i - 1] = ship.getId();
+        } else {
+          this.grid[y][x + i - 2] = ship.getId();
+        }
         i += 1;
       }
       return true;
     },
+
     clearPreview: function () {
       this.fleet.forEach(function (ship) {
         if (ship.dom.parentNode) {
@@ -100,7 +105,7 @@
     },
 
     renderShips: function (grid) {},
-  };  
+  };
 
   global.player = player;
 })(this);
