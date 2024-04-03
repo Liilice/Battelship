@@ -120,11 +120,13 @@
     },
     addListeners: function () {
       // on ajoute des acouteur uniquement sur la grid (délégation d'événement)
-      this.grid.addEventListener(
-        "mousemove",
-        _.bind(this.handleMouseMove, this)
-      );
+      this.grid.addEventListener("mousemove",_.bind(this.handleMouseMove, this));
+      // this.grid.addEventListener("right click", event.button == 2,_.bind(this.handleClick, this));
       this.grid.addEventListener("click", _.bind(this.handleClick, this));
+      this.grid.addEventListener("contextmenu", _.bind(this.rightClick, this))
+    },
+    rightClick: function(e){
+      e.preventDefault();
     },
     handleMouseMove: function (e) {
       // on est dans la phase de placement des bateau
@@ -157,7 +159,6 @@
     handleClick: function (e) {
       // self garde une référence vers "this" en cas de changement de scope
       var self = this;
-
       // si on a cliqué sur une cellule (délégation d'événement)
       if (e.target.classList.contains("cell")) {
         // si on est dans la phase de placement des bateau
