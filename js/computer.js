@@ -22,27 +22,31 @@
     },
     isShipOk: function (callback) {
       var self = this;
-
       // var i = 0;
-      // var j;
+      var j;
+      var array = [];
+      var ramdom;
+      for (let i = 0; i < 4; i++) {
+        ramdom = Math.floor(Math.random() * 10);
+        if (array.includes(ramdom)) {
+          console.log("double", ramdom);
+          ramdom = Math.floor(Math.random() * 10);
+        }
+        array.push(ramdom);
+      }
+      // console.log(array);
       this.fleet.forEach(function (ship, i) {
-        var i = Math.floor(Math.random() * 10);
         var x = Math.floor(Math.random() * (10 - ship.life + 1));
-        var row = Math.floor(Math.random() * 10);
-        var col = Math.floor(Math.random() * (11 - ship.life));
-        // var col = 0;
-        var j = 0;
-        // console.log("i = ", i);
-        // console.log("x = ", x);
-
+        j = 0;
         while (j < ship.life) {
-          if (self.grid[i][x + j] !== 0) {
-            // var col = 0;
-            self.grid[row][col + j] = ship.getId();
-            // console.log("dedefs");
-            // return;
+          if (ship.id === 5) {
+            this.grid[array[0]][x + j] = ship.getId();
+          } else if (ship.id === 6) {
+            this.grid[array[1]][x + j] = ship.getId();
+          } else if (ship.id === 7) {
+            this.grid[array[2]][x + j] = ship.getId();
           } else {
-            self.grid[i][x + j] = ship.getId();
+            this.grid[array[3]][x + j] = ship.getId();
           }
           j += 1;
         }
