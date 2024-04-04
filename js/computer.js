@@ -9,6 +9,9 @@
     tries: [],
     fleet: [],
     game: null,
+    setGame: function (game) {
+      this.game = game;
+    },
     play: function () {
       var self = this;
       setTimeout(function () {
@@ -25,15 +28,25 @@
       this.fleet.forEach(function (ship, i) {
         var i = Math.floor(Math.random() * 10);
         var x = Math.floor(Math.random() * (10 - ship.life + 1));
+        var row = Math.floor(Math.random() * 10);
+        var col = Math.floor(Math.random() * (11 - ship.life));
+        // var col = 0;
         var j = 0;
+        // console.log("i = ", i);
+        // console.log("x = ", x);
+
         while (j < ship.life) {
           if (self.grid[i][x + j] !== 0) {
-            return;
+            // var col = 0;
+            self.grid[row][col + j] = ship.getId();
+            // console.log("dedefs");
+            // return;
           } else {
             self.grid[i][x + j] = ship.getId();
           }
           j += 1;
         }
+        // console.log(self.grid);
       }, this);
 
       setTimeout(function () {

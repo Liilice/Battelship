@@ -200,6 +200,7 @@
             utils.eq(e.target),
             utils.eq(e.target.parentNode)
           );
+          this.players[0].renderTries(this.grid);
         }
       }
     },
@@ -243,7 +244,7 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[0].grid);
-      console.log(this.players[1].grid);
+      console.log(this.players[1]);
       let miniGrid = this.miniGrid;
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
