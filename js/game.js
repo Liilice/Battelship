@@ -67,7 +67,7 @@
       // récupération du numéro d'index de la phase courante
       var ci = this.phaseOrder.indexOf(this.currentPhase);
       var self = this;
-
+      // console.log(ci);
       if (ci !== this.phaseOrder.length - 1) {
         this.currentPhase = this.phaseOrder[ci + 1];
       } else {
@@ -127,7 +127,26 @@
     },
     rightClick: function(e){
       e.preventDefault();
+      if (
+        this.getPhase() === this.PHASE_INIT_PLAYER &&
+        e.target.classList.contains("cell")
+      ) {
+      var ship = this.players[0].fleet[this.players[0].activeShip];
+      }
+
+
+      ship.dom.style.top =
+      "" +
+      utils.eq(e.target.parentNode) * utils.CELL_SIZE -
+      (600 + this.players[0].activeShip * 60) +
+      "px";
+    ship.dom.style.left =
+      "" +
+      utils.eq(e.target) * utils.CELL_SIZE -
+      Math.floor(ship.getLife() / 2) * utils.CELL_SIZE +
+      "px";
     },
+    
     handleMouseMove: function (e) {
       // on est dans la phase de placement des bateau
       if (
@@ -135,12 +154,15 @@
         e.target.classList.contains("cell")
       ) {
         var ship = this.players[0].fleet[this.players[0].activeShip];
+        console.log(ship);
+        
 
         // si on a pas encore affiché (ajouté aux DOM) ce bateau
         if (!ship.dom.parentNode) {
-          this.grid.appendChild(ship.dom);
+          // console.log(!ship.dom.parentNode)
           // passage en arrière plan pour ne pas empêcher la capture des événements sur les cellules de la grille
           ship.dom.style.zIndex = -1;
+          
         }
 
         // décalage visuelle, le point d'ancrage du curseur est au milieu du bateau
