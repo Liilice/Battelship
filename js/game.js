@@ -137,6 +137,9 @@
         var ship = this.players[0].fleet[this.players[0].activeShip];
 
         if(ship.dom.style.rotate == ""){
+          if (ship.getLife()%2 === 0) {
+            ship.dom.style.transformOrigin = "150px 30px";
+          }
           ship.dom.style.rotate = "90deg";
         }else{
           ship.dom.style.rotate = ""
@@ -151,7 +154,6 @@
         e.target.classList.contains("cell")
       ) {
         var ship = this.players[0].fleet[this.players[0].activeShip];
-        // console.log(ship.dom.style.rotate = "90deg");
         // console.log(player.grid)
 
         // si on a pas encore affiché (ajouté aux DOM) ce bateau
@@ -257,11 +259,13 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[0].grid);
-      console.log(this.players[1].grid);
-      let miniGrid = this.miniGrid;
+      
+      console.log(this.players[0]);
+      // let miniGrid = this.miniGrid;
+      // console.log(miniGrid);
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
-          let node = miniGrid.querySelector(
+          let node = this.miniGrid.querySelector(
             ".row:nth-child(" +
               (row + 1) +
               ") .cell:nth-child(" +
