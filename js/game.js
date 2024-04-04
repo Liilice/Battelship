@@ -41,7 +41,7 @@
         this.PHASE_PLAY_OPPONENT,
         this.PHASE_GAME_OVER,
       ];
-      this.playerTurnPhaseIndex = 0;
+      this.playerTurnPhaseIndex = 2;
 
       // initialise les joueurs
       this.setupPlayers();
@@ -67,7 +67,6 @@
       // récupération du numéro d'index de la phase courante
       var ci = this.phaseOrder.indexOf(this.currentPhase);
       var self = this;
-      // console.log(ci);
       if (ci !== this.phaseOrder.length - 1) {
         this.currentPhase = this.phaseOrder[ci + 1];
       } else {
@@ -79,7 +78,9 @@
           // detection de la fin de partie
           if (!this.gameIsOver()) {
             // le jeu n'est pas terminé on recommence un tour de jeu
+            utils.info("A vous de jouer, choisissez une case !");
             this.currentPhase = this.phaseOrder[this.playerTurnPhaseIndex];
+            break;
           }
         case this.PHASE_INIT_PLAYER:
           utils.info("Placez vos bateaux");
@@ -120,33 +121,29 @@
     },
     addListeners: function () {
       // on ajoute des acouteur uniquement sur la grid (délégation d'événement)
-      this.grid.addEventListener("mousemove",_.bind(this.handleMouseMove, this));
-      // this.grid.addEventListener("right click", event.button == 2,_.bind(this.handleClick, this));
+      this.grid.addEventListener(
+        "mousemove",
+        _.bind(this.handleMouseMove, this)
+      );
       this.grid.addEventListener("click", _.bind(this.handleClick, this));
-      this.grid.addEventListener("contextmenu", _.bind(this.rightClick, this))
+      this.grid.addEventListener("contextmenu", _.bind(this.rightClick, this));
     },
-    rightClick: function(e){
+    rightClick: function (e) {
       e.preventDefault();
       if (
         this.getPhase() === this.PHASE_INIT_PLAYER &&
         e.target.classList.contains("cell")
       ) {
-      var ship = this.players[0].fleet[this.players[0].activeShip];
+        var ship = this.players[0].fleet[this.players[0].activeShip];
+
+        if(ship.dom.style.rotate == ""){
+          ship.dom.style.rotate = "90deg";
+        }else{
+          ship.dom.style.rotate = ""
+        }
       }
 
-
-      ship.dom.style.top =
-      "" +
-      utils.eq(e.target.parentNode) * utils.CELL_SIZE -
-      (600 + this.players[0].activeShip * 60) +
-      "px";
-    ship.dom.style.left =
-      "" +
-      utils.eq(e.target) * utils.CELL_SIZE -
-      Math.floor(ship.getLife() / 2) * utils.CELL_SIZE +
-      "px";
     },
-    
     handleMouseMove: function (e) {
       // on est dans la phase de placement des bateau
       if (
@@ -154,15 +151,14 @@
         e.target.classList.contains("cell")
       ) {
         var ship = this.players[0].fleet[this.players[0].activeShip];
-        console.log(ship);
-        
+        // console.log(ship.dom.style.rotate = "90deg");
+        // console.log(player.grid)
 
         // si on a pas encore affiché (ajouté aux DOM) ce bateau
         if (!ship.dom.parentNode) {
-          // console.log(!ship.dom.parentNode)
+          this.grid.appendChild(ship.dom);
           // passage en arrière plan pour ne pas empêcher la capture des événements sur les cellules de la grille
           ship.dom.style.zIndex = -1;
-          
         }
 
         // décalage visuelle, le point d'ancrage du curseur est au milieu du bateau
@@ -261,7 +257,7 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[0].grid);
-      // console.log(this.players[0]);
+      console.log(this.players[1].grid);
       let miniGrid = this.miniGrid;
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
