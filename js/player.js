@@ -51,49 +51,98 @@
     setActiveShipPosition: function (x, y) {
       var ship = this.fleet[this.activeShip];
       var i = 0;
-      if (ship.id === 2 || ship.id === 1) {
-        if (x < 2 || x > 7) {
-          return false;
-        }
-      }
-      if (ship.id === 3) {
-        if (x < 2 || x > 8) {
-          return false;
-        }
-      }
-      if (ship.id === 4) {
-        if (x < 1 || x > 8) {
-          return false;
-        }
-      }
-      // if (y > this.grid[0].length) {
-      //   return false;
-      // }
-      for (let i = 0; i < ship.getLife(); i++) {
-        if (ship.id == 1 || ship.id == 2) {
-          if (this.grid[y][x - 2] !== 0 || this.grid[y][x + 2] !== 0) {
-            return false;
-          }
-          console.log(this.grid[y][x - 2]);
-        } else if (ship.id == 3) {
-          if (this.grid[y][x - 2] !== 0 || this.grid[y][x + 1] !== 0) {
-            return false;
-          }
-        } else {
-          if (this.grid[y][x - 1] !== 0 || this.grid[y][x + 1] !== 0) {
+
+      var rotate = ship.dom.style.rotate;
+      if (rotate === '90deg') {
+        // Check vertical début
+        if (ship.id === 2 || ship.id === 1) {
+          if (y < 2 || y > 7) {
             return false;
           }
         }
+        if (ship.id === 3) {
+          if (y < 2 || y > 8) {
+            return false;
+          }
+        }
+        if (ship.id === 4) {
+          if (y < 1 || y > 8) {
+            return false;
+          }
+        }
+        
+        for (let i = 0; i < ship.getLife(); i++) {
+          if (ship.id == 1 || ship.id == 2) {
+            if (this.grid[y - 2][x] !== 0 || this.grid[y + 2][x] !== 0) {
+              return false;
+            }
+          } else if (ship.id == 3) {
+            if (this.grid[y - 2][x] !== 0 || this.grid[y + 1][x] !== 0) {
+              return false;
+            }
+          } else {
+            if (this.grid[y - 1][x] !== 0 || this.grid[y + 1][x] !== 0) {
+              return false;
+            }
+          }
+        }
+        
+        while (i < ship.getLife()) {
+          if (ship.id === 4) {
+            this.grid[y + i - 1][x] = ship.getId();
+          } else {
+            this.grid[y + i - 2][x] = ship.getId();
+          }
+          i += 1;
+        }
+        
+        // Check vertical fin
+      } else {
+        // Check horizontal début
+        if (ship.id === 2 || ship.id === 1) {
+          if (x < 2 || x > 7) {
+            return false;
+          }
+        }
+        if (ship.id === 3) {
+          if (x < 2 || x > 8) {
+            return false;
+          }
+        }
+        if (ship.id === 4) {
+          if (x < 1 || x > 8) {
+            return false;
+          }
+        }
+        
+        for (let i = 0; i < ship.getLife(); i++) {
+          if (ship.id == 1 || ship.id == 2) {
+            if (this.grid[y][x - 2] !== 0 || this.grid[y][x + 2] !== 0) {
+              return false;
+            }
+          } else if (ship.id == 3) {
+            if (this.grid[y][x - 2] !== 0 || this.grid[y][x + 1] !== 0) {
+              return false;
+            }
+          } else {
+            if (this.grid[y][x - 1] !== 0 || this.grid[y][x + 1] !== 0) {
+              return false;
+            }
+          }
+        }
+
+        while (i < ship.getLife()) {
+          if (ship.id === 4) {
+            this.grid[y][x + i - 1] = ship.getId();
+          } else {
+            this.grid[y][x + i - 2] = ship.getId();
+          }
+          i += 1;
+        }
+        
+        // Check horizontal fin
       }
 
-      while (i < ship.getLife()) {
-        if (ship.id === 4) {
-          this.grid[y][x + i - 1] = ship.getId();
-        } else {
-          this.grid[y][x + i - 2] = ship.getId();
-        }
-        i += 1;
-      }
       return true;
     },
 

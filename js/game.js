@@ -125,12 +125,29 @@
         "mousemove",
         _.bind(this.handleMouseMove, this)
       );
+
       // this.grid.addEventListener("right click", event.button == 2,_.bind(this.handleClick, this));
       this.grid.addEventListener("click", _.bind(this.handleClick, this));
       this.grid.addEventListener("contextmenu", _.bind(this.rightClick, this));
     },
     rightClick: function (e) {
       e.preventDefault();
+      if (
+        this.getPhase() === this.PHASE_INIT_PLAYER &&
+        e.target.classList.contains("cell")
+      ) {
+        var ship = this.players[0].fleet[this.players[0].activeShip];
+
+        if(ship.dom.style.rotate == ""){
+          if (ship.getLife()%2 === 0) {
+            ship.dom.style.transformOrigin = "150px 30px";
+          }
+          ship.dom.style.rotate = "90deg";
+        }else{
+          ship.dom.style.rotate = ""
+        }
+      }
+
     },
     handleMouseMove: function (e) {
       // on est dans la phase de placement des bateau
@@ -139,6 +156,7 @@
         e.target.classList.contains("cell")
       ) {
         var ship = this.players[0].fleet[this.players[0].activeShip];
+        // console.log(player.grid)
 
         // si on a pas encore affiché (ajouté aux DOM) ce bateau
         if (!ship.dom.parentNode) {
@@ -247,11 +265,10 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[0].grid);
-      // console.log(this.players[1]);
-      let miniGrid = this.miniGrid;
+
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
-          let node = miniGrid.querySelector(
+          let node = this.miniGrid.querySelector(
             ".row:nth-child(" +
               (row + 1) +
               ") .cell:nth-child(" +
