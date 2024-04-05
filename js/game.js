@@ -228,7 +228,6 @@
             );
           }
         }
-        // this.renderMap();
       }
     },
     // fonction utlisée par les objets représentant les joueurs (ordinateur ou non)
@@ -249,9 +248,6 @@
       // on demande à l'attaqué si il a un bateaux à la position visée
       // le résultat devra être passé en paramètre à la fonction de callback (3e paramètre)
       target.receiveAttack(col, line, function (hasSucceed) {
-        // console.log(line, col);
-
-        // console.log(line, col);
         if (hasSucceed) {
           msg += "Touché !";
         } else {
@@ -278,13 +274,11 @@
       });
     },
     renderMap: function () {
-      // this.players[1].renderTries(this.miniGrid);
       this.players[0].renderTries(this.grid);
     },
     renderMiniMap: function () {
       // console.log(this.players[1].tries);
-      // console.log(this.players[1].renderTries);
-      // this.players[1].renderTries(this.grid);
+      // console.log(this.players[0]);
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
           let node = this.miniGrid.querySelector(
@@ -297,15 +291,16 @@
           let shipId = this.players[0].grid[row][col];
 
           let ship = this.players[0].fleet.find((element) => {
-            // console.log(element);
             return element.id === shipId;
           });
 
           if (ship) {
             node.style.backgroundColor = ship.color;
+            node.innerText = ship.name.toLowerCase();
           } else {
             node.style.backgroundColor = "";
           }
+          // console.log(this.players[0]);
         }
       }
     },

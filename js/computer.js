@@ -18,8 +18,6 @@
         var line = Math.floor(Math.random() * 10);
         var col = Math.floor(Math.random() * 10);
         self.game.fire(this, col, line, function (hasSucced) {
-          // line = Math.floor(Math.random() * 10);
-          // col = Math.floor(Math.random() * 10);
           self.tries[parseInt(line)][parseInt(col)] = hasSucced;
         });
       }, 2000);
