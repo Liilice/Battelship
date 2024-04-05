@@ -125,6 +125,8 @@
         "mousemove",
         _.bind(this.handleMouseMove, this)
       );
+
+      // this.grid.addEventListener("right click", event.button == 2,_.bind(this.handleClick, this));
       this.grid.addEventListener("click", _.bind(this.handleClick, this));
       this.grid.addEventListener("contextmenu", _.bind(this.rightClick, this));
     },
@@ -216,6 +218,7 @@
             utils.eq(e.target),
             utils.eq(e.target.parentNode)
           );
+          this.players[0].renderTries(this.grid);
         }
       }
     },
@@ -257,12 +260,12 @@
         }, 1000);
       });
     },
+    renderMap: function () {
+      this.players[0].renderTries(this.grid);
+    },
     renderMiniMap: function () {
       // console.log(this.players[0].grid);
-      
-      console.log(this.players[0]);
-      // let miniGrid = this.miniGrid;
-      // console.log(miniGrid);
+
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
           let node = this.miniGrid.querySelector(
