@@ -214,11 +214,14 @@
           }
           // si on est dans la phase de jeu (du joueur humain)
         } else if (this.getPhase() === this.PHASE_PLAY_PLAYER) {
-          this.players[0].play(
-            utils.eq(e.target),
-            utils.eq(e.target.parentNode)
-          );
+          if (e.target.hasAttribute("style")) {
+            utils.info("Case déjà tiré !!!");
+            this.players[1].play();
+          }else{
+            this.players[0].play(utils.eq(e.target),utils.eq(e.target.parentNode));
+          }
           this.players[0].renderTries(this.grid);
+
         }
       }
     },
