@@ -14,17 +14,18 @@
     },
     play: function () {
       var self = this;
-      console.log(this.tries);
       setTimeout(function () {
-        var line;
-        var col;
-        self.game.fire(this, 0, 0, function (hasSucced) {
-          line = Math.floor(Math.random() * 10);
-          col = Math.floor(Math.random() * 10);
-          self.tries[line][col] = hasSucced;
+        var line = Math.floor(Math.random() * 10);
+        var col = Math.floor(Math.random() * 10);
+        self.game.fire(this, col, line, function (hasSucced) {
+          // line = Math.floor(Math.random() * 10);
+          // col = Math.floor(Math.random() * 10);
+          self.tries[parseInt(line)][parseInt(col)] = hasSucced;
         });
       }, 2000);
+      // console.log(self.tries);
     },
+
     isShipOk: function (callback) {
       var self = this;
       // var i = 0;
@@ -34,7 +35,7 @@
       for (let i = 0; i < 4; i++) {
         ramdom = Math.floor(Math.random() * 10);
         if (array.includes(ramdom)) {
-          console.log("double", ramdom);
+          // console.log("double", ramdom);
           ramdom = Math.floor(Math.random() * 10);
         }
         array.push(ramdom);

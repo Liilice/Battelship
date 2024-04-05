@@ -53,7 +53,7 @@
       var i = 0;
 
       var rotate = ship.dom.style.rotate;
-      if (rotate === '90deg') {
+      if (rotate === "90deg") {
         // Check vertical début
         if (ship.id === 2 || ship.id === 1) {
           if (y < 2 || y > 7) {
@@ -70,7 +70,7 @@
             return false;
           }
         }
-        
+
         for (let i = 0; i < ship.getLife(); i++) {
           if (ship.id == 1 || ship.id == 2) {
             if (this.grid[y - 2][x] !== 0 || this.grid[y + 2][x] !== 0) {
@@ -86,7 +86,7 @@
             }
           }
         }
-        
+
         while (i < ship.getLife()) {
           if (ship.id === 4) {
             this.grid[y + i - 1][x] = ship.getId();
@@ -95,7 +95,7 @@
           }
           i += 1;
         }
-        
+
         // Check vertical fin
       } else {
         // Check horizontal début
@@ -114,7 +114,7 @@
             return false;
           }
         }
-        
+
         for (let i = 0; i < ship.getLife(); i++) {
           if (ship.id == 1 || ship.id == 2) {
             if (this.grid[y][x - 2] !== 0 || this.grid[y][x + 2] !== 0) {
@@ -139,7 +139,7 @@
           }
           i += 1;
         }
-        
+
         // Check horizontal fin
       }
 
@@ -168,6 +168,9 @@
       }
     },
     renderTries: function (grid) {
+      // console.log(this.grid);
+      console.log("renderTries " + grid.querySelector);
+
       this.tries.forEach(function (row, rid) {
         row.forEach(function (val, col) {
           var node = grid.querySelector(
@@ -187,7 +190,33 @@
       });
     },
 
-    renderShips: function (grid) {},
+    renderShips: function (grid) {
+      console.log(this.tries);
+      this.tries.forEach(function (row, rid) {
+        row.forEach(function (val, col) {
+          var node = grid.querySelector(
+            ".row:nth-child(" +
+              (rid + 1) +
+              ") .cell:nth-child(" +
+              (col + 1) +
+              ")"
+          );
+          if (val === true) {
+            node.style.backgroundColor = "purple";
+          }
+          console.log(rid[val]);
+          // if (
+          //   val === true &&
+          //   val + 1 === true &&
+          //   val + 2 === true &&
+          //   val + 3 === true &&
+          //   val + 4 === true
+          // ) {
+          //   node.classList.add = "sunk";
+          // }
+        });
+      });
+    },
   };
 
   global.player = player;
