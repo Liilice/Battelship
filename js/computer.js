@@ -14,9 +14,14 @@
     },
     play: function () {
       var self = this;
+      console.log(this.tries);
       setTimeout(function () {
+        var line;
+        var col;
         self.game.fire(this, 0, 0, function (hasSucced) {
-          self.tries[0][0] = hasSucced;
+          line = Math.floor(Math.random() * 10);
+          col = Math.floor(Math.random() * 10);
+          self.tries[line][col] = hasSucced;
         });
       }, 2000);
     },
