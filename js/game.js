@@ -138,16 +138,15 @@
       ) {
         var ship = this.players[0].fleet[this.players[0].activeShip];
 
-        if(ship.dom.style.rotate == ""){
-          if (ship.getLife()%2 === 0) {
+        if (ship.dom.style.rotate == "") {
+          if (ship.getLife() % 2 === 0) {
             ship.dom.style.transformOrigin = "150px 30px";
           }
           ship.dom.style.rotate = "90deg";
-        }else{
-          ship.dom.style.rotate = ""
+        } else {
+          ship.dom.style.rotate = "";
         }
       }
-
     },
     handleMouseMove: function (e) {
       // on est dans la phase de placement des bateau
@@ -215,13 +214,19 @@
           // si on est dans la phase de jeu (du joueur humain)
         } else if (this.getPhase() === this.PHASE_PLAY_PLAYER) {
           if (e.target.hasAttribute("style")) {
-            utils.info("Case déjà tiré !!!");
-            this.players[1].play();
-          }else{
-            this.players[0].play(utils.eq(e.target),utils.eq(e.target.parentNode));
+            utils.info("Case déjà tiré !!");
+            this.wait();
+            let self = this;
+            setTimeout(function () {
+              self.stopWaiting();
+              self.goNextPhase();
+            }, 2000);
+          } else {
+            this.players[0].play(
+              utils.eq(e.target),
+              utils.eq(e.target.parentNode)
+            );
           }
-          this.players[0].renderTries(this.grid);
-
         }
       }
     },
@@ -259,6 +264,11 @@
         // histoire de laisser le temps au joueur de lire les message affiché
         setTimeout(function () {
           self.stopWaiting();
+          if (self.currentPhase === self.PHASE_PLAY_OPPONENT) {
+            self.players[1].renderShips(self.miniGrid);
+          } else {
+            self.players[0].renderTries(self.grid);
+          }
           self.goNextPhase();
         }, 1000);
       });
@@ -267,8 +277,8 @@
       this.players[0].renderTries(this.grid);
     },
     renderMiniMap: function () {
-      // console.log(this.players[0].grid);
-
+      // console.log(this.players[1].tries);
+      // console.log(this.players[0]);
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
           let node = this.miniGrid.querySelector(
@@ -286,9 +296,11 @@
 
           if (ship) {
             node.style.backgroundColor = ship.color;
+            node.innerText = ship.name.toLowerCase();
           } else {
             node.style.backgroundColor = "";
           }
+          // console.log(this.players[0]);
         }
       }
     },
