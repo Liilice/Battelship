@@ -4,7 +4,7 @@
 (function (global) {
   "use strict";
 
-  var ship = { dom: { parentNode: { removeChild: function () {} } } };
+  var sheep = { dom: { parentNode: { removeChild: function () {} } } };
 
   var player = {
     grid: [],
@@ -231,8 +231,8 @@
               row[col + 4]
             ) {
               if (
-                node.innerHTML === "battleship" ||
-                node.innerHTML === "destroyer"
+                node.getAttribute("name") === "battleship" ||
+                node.getAttribute("name") === "destroyer"
               ) {
                 aligned = true;
               }
@@ -242,7 +242,7 @@
               row[col + 2] === true &&
               row[col + 3] === true
             ) {
-              if (node.innerHTML === "submarine") {
+              if (node.getAttribute("name") === "submarine") {
                 aligned = true;
               }
             } else if (
@@ -250,12 +250,12 @@
               row[col + 1] === true &&
               row[col + 2] === true
             ) {
-              if (node.innerHTML === "small-ship") {
+              if (node.getAttribute("name") === "small-ship") {
                 aligned = true;
               }
             }
             if (aligned) {
-              var shipName = node.innerHTML;
+              var shipName = node.getAttribute("name");
               var elem = document.getElementsByClassName(shipName);
               elem[0].classList.add("sunk");
             }
