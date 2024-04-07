@@ -54,7 +54,7 @@
           }
           j += 1;
         }
-        // console.log(self.grid);
+        console.log(self.grid);
       }, this);
 
       setTimeout(function () {
