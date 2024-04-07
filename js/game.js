@@ -52,6 +52,21 @@
       // c'est parti !
       this.goNextPhase();
     },
+    initComputer: function () {
+      this.grid = document.querySelector(".board .main-grid");
+      this.miniGrid = document.querySelector(".mini-grid");
+      this.phaseOrder = [
+        this.PHASE_INIT_OPPONENT,
+        this.PHASE_INIT_PLAYER,
+        this.PHASE_PLAY_OPPONENT,
+        this.PHASE_PLAY_PLAYER,
+        this.PHASE_GAME_OVER,
+      ];
+      this.playerTurnPhaseIndex = 2;
+      this.setupPlayers();
+      this.addListeners();
+      this.goNextPhase();
+    },
     setupPlayers: function () {
       // donne aux objets player et computer une réference vers l'objet game
       player.setGame(this);
@@ -343,6 +358,35 @@
 
   // point d'entrée
   document.addEventListener("DOMContentLoaded", function () {
-    game.init();
+    let choice_container = document.querySelector(".game-info");
+    let button_player = document.createElement("button");
+    button_player.innerText = "humain";
+    button_player.addEventListener("click", () => {
+      game.init();
+    });
+
+    let button_computer = document.createElement("button");
+    button_computer.innerText = "ordinateur";
+    button_computer.addEventListener("click", () => {
+      game.initComputer();
+    });
+
+    let button_random = document.createElement("button");
+    button_random.innerText = "aléatoire";
+    button_random.addEventListener("click", () => {
+      var choice = Math.floor(Math.random()) > 0.5 ? "player" : "computer";
+      if (choice === "player") {
+        utils.info("player");
+        // game.init();
+      } else {
+        utils.info("computer");
+
+        // game.initComputer();
+      }
+    });
+
+    choice_container.append(button_player, button_computer, button_random);
+
+    // game.init();
   });
 })();
