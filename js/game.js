@@ -125,13 +125,13 @@
       }
     },
     gameIsOver: function () {
-      let shipDown = document.querySelectorAll(".sunk");
+      var shipDown = document.querySelectorAll(".sunk");
       if (shipDown.length === 4) {
         return true;
       }
       var count = 0;
-      for (let i = 0; i < this.players[0].tries.length; i++) {
-        for (let j = 0; j < this.players[0].tries[i].length; j++) {
+      for (var i = 0; i < this.players[0].tries.length; i++) {
+        for (var j = 0; j < this.players[0].tries[i].length; j++) {
           if (this.players[0].tries[i][j] === true) {
             count++;
           }
@@ -266,7 +266,7 @@
           if (e.target.hasAttribute("style")) {
             utils.info("Case déjà tiré !!");
             this.wait();
-            let self = this;
+            var self = this;
             setTimeout(function () {
               self.stopWaiting();
               self.goNextPhase();
@@ -329,24 +329,24 @@
     renderMiniMap: function () {
       // console.log(this.players[1].tries);
       console.log(this.players[0]);
-      for (let row = 0; row < 10; row++) {
-        for (let col = 0; col < 10; col++) {
-          let node = this.miniGrid.querySelector(
+      for (var row = 0; row < 10; row++) {
+        for (var col = 0; col < 10; col++) {
+          var node = this.miniGrid.querySelector(
             ".row:nth-child(" +
               (row + 1) +
               ") .cell:nth-child(" +
               (col + 1) +
               ")"
           );
-          let shipId = this.players[0].grid[row][col];
+          var shipId = this.players[0].grid[row][col];
 
-          let ship = this.players[0].fleet.find((element) => {
+          var ship = this.players[0].fleet.find((element) => {
             return element.id === shipId;
           });
 
           if (ship) {
             node.style.backgroundColor = ship.color;
-            node.innerText = ship.name.toLowerCase();
+            node.setAttribute("name", ship.name.toLowerCase());
           } else {
             node.style.backgroundColor = "";
           }
@@ -358,20 +358,20 @@
 
   // point d'entrée
   document.addEventListener("DOMContentLoaded", function () {
-    let choice_container = document.querySelector(".game-info");
-    let button_player = document.createElement("button");
+    var choice_container = document.querySelector(".game-info");
+    var button_player = document.createElement("button");
     button_player.innerText = "humain";
     button_player.addEventListener("click", () => {
       game.init();
     });
 
-    let button_computer = document.createElement("button");
+    var button_computer = document.createElement("button");
     button_computer.innerText = "ordinateur";
     button_computer.addEventListener("click", () => {
       game.initComputer();
     });
 
-    let button_random = document.createElement("button");
+    var button_random = document.createElement("button");
     button_random.innerText = "aléatoire";
     button_random.addEventListener("click", () => {
       var choice = Math.floor(Math.random()) > 0.5 ? "player" : "computer";
