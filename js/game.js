@@ -83,9 +83,12 @@
             break;
           } else {
             utils.info("Partie Finie !");
-            this.init();
+            // this.players[0].resetShipPlacement();
+            this.resetGame();
+            // this.init();
             break;
           }
+
         case this.PHASE_INIT_PLAYER:
           utils.info("Placez vos bateaux");
           break;
@@ -111,7 +114,31 @@
       if (shipDown.length === 4) {
         return true;
       }
+      var count = 0;
+      for (let i = 0; i < this.players[0].tries.length; i++) {
+        for (let j = 0; j < this.players[0].tries[i].length; j++) {
+          if (this.players[0].tries[i][j] === true) {
+            count++;
+          }
+        }
+      }
+      if (count === 17) {
+        return true;
+      }
       return false;
+    },
+    resetGame: function () {
+      var cells = document.querySelectorAll(".cell");
+      cells.forEach((cell) => {
+        cell.innerText = "";
+        cell.removeAttribute("style");
+      });
+      var ship = document.querySelectorAll(".ship");
+      ship.forEach((element) => {
+        if (element.classList.contains("sunk")) {
+          element.classList.remove("sunk");
+        }
+      });
     },
     getPhase: function () {
       if (this.waiting) {
@@ -286,7 +313,7 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[1].tries);
-      // console.log(this.players[0]);
+      console.log(this.players[0]);
       for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
           let node = this.miniGrid.querySelector(
