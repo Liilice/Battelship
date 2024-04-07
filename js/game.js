@@ -11,7 +11,7 @@
     PHASE_PLAY_OPPONENT: "PHASE_PLAY_OPPONENT",
     PHASE_GAME_OVER: "PHASE_GAME_OVER",
     PHASE_WAITING: "waiting",
-
+    firstToPlay: "",
     currentPhase: "",
     phaseOrder: [],
     // garde une référence vers l'indice du tableau phaseOrder qui correspond à la phase de jeu pour le joueur humain
@@ -98,7 +98,6 @@
             break;
           } else {
             utils.info("Partie Finie !");
-            // this.players[0].resetShipPlacement();
             this.resetGame();
             // this.init();
             break;
@@ -328,7 +327,7 @@
     },
     renderMiniMap: function () {
       // console.log(this.players[1].tries);
-      console.log(this.players[0]);
+      // console.log(this.players[0]);
       for (var row = 0; row < 10; row++) {
         for (var col = 0; col < 10; col++) {
           var node = this.miniGrid.querySelector(
@@ -362,26 +361,27 @@
     var button_player = document.createElement("button");
     button_player.innerText = "humain";
     button_player.addEventListener("click", () => {
+      game.firstToPlay = "player";
       game.init();
     });
 
     var button_computer = document.createElement("button");
     button_computer.innerText = "ordinateur";
     button_computer.addEventListener("click", () => {
+      game.firstToPlay = "computer";
       game.initComputer();
     });
 
     var button_random = document.createElement("button");
     button_random.innerText = "aléatoire";
     button_random.addEventListener("click", () => {
-      var choice = Math.floor(Math.random()) > 0.5 ? "player" : "computer";
-      if (choice === "player") {
+      var first = Math.floor(Math.random()) >= 0.5 ? "player" : "computer";
+      if (first === "player") {
         utils.info("player");
-        // game.init();
+        game.init();
       } else {
         utils.info("computer");
-
-        // game.initComputer();
+        game.initComputer();
       }
     });
 

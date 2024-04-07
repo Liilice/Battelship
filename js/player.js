@@ -14,7 +14,7 @@
     activeShip: 0,
     //audio: null,
     //audioMiss: null,
-    
+
     setGame: function (game) {
       this.game = game;
     },
@@ -57,7 +57,6 @@
 
       var rotate = ship.dom.style.rotate;
       if (rotate === "90deg") {
-        // Check vertical début
         if (ship.id === 2 || ship.id === 1) {
           if (y < 2 || y > 7) {
             return false;
@@ -98,10 +97,7 @@
           }
           i += 1;
         }
-
-        // Check vertical fin
       } else {
-        // Check horizontal début
         if (ship.id === 2 || ship.id === 1) {
           if (x < 2 || x > 7) {
             return false;
@@ -142,8 +138,6 @@
           }
           i += 1;
         }
-
-        // Check horizontal fin
       }
 
       return true;
@@ -182,13 +176,13 @@
           );
 
           if (val === true) {
-
             var audio = document.createElement("audio");
-            audio.setAttribute("src", "LASRGun_Blaster star wars 2 (ID 1758)_LS.wav")
+            audio.setAttribute(
+              "src",
+              "LASRGun_Blaster star wars 2 (ID 1758)_LS.wav"
+            );
             audio.setAttribute("id", "myaudio");
             grid.append(audio);
-            console.log(grid);
-
             audio.play();
             setTimeout(function () {
               document.querySelector("#myaudio").remove();
@@ -196,10 +190,12 @@
             node.style.backgroundColor = "#e60019";
           } else if (val === false) {
             var audioMiss = document.createElement("audio");
-            audioMiss.setAttribute("src", "TOYMech_Pistolet a petard 6 (ID 2002)_LS.wav");
+            audioMiss.setAttribute(
+              "src",
+              "TOYMech_Pistolet a petard 6 (ID 2002)_LS.wav"
+            );
             audioMiss.setAttribute("id", "audioMiss");
             grid.append(audioMiss);
-            console.log(grid);
             audioMiss.play();
             setTimeout(function () {
               document.querySelector("#audioMiss").remove();
@@ -259,8 +255,6 @@
               var elem = document.getElementsByClassName(shipName);
               elem[0].classList.add("sunk");
             }
-          } else if (val === false) {
-            node.style.backgroundColor = "pink";
           }
         });
       });
