@@ -14,7 +14,7 @@
     activeShip: 0,
     //audio: null,
     //audioMiss: null,
-    
+
     setGame: function (game) {
       this.game = game;
     },
@@ -182,9 +182,11 @@
           );
 
           if (val === true) {
-
             var audio = document.createElement("audio");
-            audio.setAttribute("src", "LASRGun_Blaster star wars 2 (ID 1758)_LS.wav")
+            audio.setAttribute(
+              "src",
+              "LASRGun_Blaster star wars 2 (ID 1758)_LS.wav"
+            );
             audio.setAttribute("id", "myaudio");
             grid.append(audio);
             console.log(grid);
@@ -196,7 +198,10 @@
             node.style.backgroundColor = "#e60019";
           } else if (val === false) {
             var audioMiss = document.createElement("audio");
-            audioMiss.setAttribute("src", "TOYMech_Pistolet a petard 6 (ID 2002)_LS.wav");
+            audioMiss.setAttribute(
+              "src",
+              "TOYMech_Pistolet a petard 6 (ID 2002)_LS.wav"
+            );
             audioMiss.setAttribute("id", "audioMiss");
             grid.append(audioMiss);
             console.log(grid);
