@@ -81,6 +81,10 @@
             utils.info("A vous de jouer, choisissez une case !");
             this.currentPhase = this.phaseOrder[this.playerTurnPhaseIndex];
             break;
+          } else {
+            utils.info("Partie Finie !");
+            this.init();
+            break;
           }
         case this.PHASE_INIT_PLAYER:
           utils.info("Placez vos bateaux");
@@ -103,6 +107,10 @@
       }
     },
     gameIsOver: function () {
+      let shipDown = document.querySelectorAll(".sunk");
+      if (shipDown.length === 4) {
+        return true;
+      }
       return false;
     },
     getPhase: function () {
