@@ -2,39 +2,66 @@
 /*global _, player */
 
 (function (global) {
-    "use strict";
+  "use strict";
 
-    var computer = _.assign({}, player, {
-        grid: [],
-        tries: [],
-        fleet: [],
-        game: null,
-        play: function () {
-            var self = this;
-            setTimeout(function () {
-                self.game.fire(this, 0, 0, function (hasSucced) {
-                    self.tries[0][0] = hasSucced;
-                });
-            }, 2000);
-        },
-        areShipsOk: function (callback) {
-            var i = 0;
-            var j;
+  var computer = _.assign({}, player, {
+    grid: [],
+    tries: [],
+    fleet: [],
+    game: null,
+    setGame: function (game) {
+      this.game = game;
+    },
+    play: function () {
+      var self = this;
+      setTimeout(function () {
+        var line = Math.floor(Math.random() * 10);
+        var col = Math.floor(Math.random() * 10);
+        self.game.fire(this, col, line, function (hasSucced) {
+          self.tries[parseInt(line)][parseInt(col)] = hasSucced;
+        });
+      }, 2000);
+      // console.log(self.tries);
+    },
 
-            this.fleet[i].forEach(function (ship, i) {
-                j = 0;
-                while (j < ship.life) {
-                    this.grid[i][j] = ship.getId();
-                    j += 1;
-                }
-            }, this);
-
-            setTimeout(function () {
-                callback();
-            }, 500);
+    isShipOk: function (callback) {
+      var self = this;
+      // var i = 0;
+      var j;
+      var array = [];
+      var ramdom;
+      for (let i = 0; i < 4; i++) {
+        ramdom = Math.floor(Math.random() * 10);
+        if (array.includes(ramdom)) {
+          // console.log("double", ramdom);
+          ramdom = Math.floor(Math.random() * 10);
         }
-    });
+        array.push(ramdom);
+      }
+      // console.log(array);
+      this.fleet.forEach(function (ship, i) {
+        var x = Math.floor(Math.random() * (10 - ship.life + 1));
+        j = 0;
+        while (j < ship.life) {
+          if (ship.id === 5) {
+            this.grid[array[0]][x + j] = ship.getId();
+          } else if (ship.id === 6) {
+            this.grid[array[1]][x + j] = ship.getId();
+          } else if (ship.id === 7) {
+            this.grid[array[2]][x + j] = ship.getId();
+          } else {
+            this.grid[array[3]][x + j] = ship.getId();
+          }
+          j += 1;
+        }
+        console.log(self.grid);
+      }, this);
 
-    global.computer = computer;
+      setTimeout(function () {
+        callback();
+      }, 500);
+    },
+  });
 
-}(this));
+  global.computer = computer;
+})(this);
